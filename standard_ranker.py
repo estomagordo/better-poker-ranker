@@ -1,14 +1,15 @@
 from collections.abc import Callable
 
 from card import Card
+from high_scorer import score
 
 
 class StandardRanker:
     def hand_size(self) -> int:
         return 5
     
-    def score_compare(self) -> Callable[[Card], list[int]]:
-        pass
+    def hand_score(self) -> Callable[[list[Card]], list[int]]:
+        return score
 
-    def sort_compare(self) -> Callable[[Card], int]:
-        return lambda card: card.rank
+    def card_compare(self) -> Callable[[Card], int]:
+        return lambda card: -card.rank
