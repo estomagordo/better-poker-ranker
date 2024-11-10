@@ -8,19 +8,25 @@ class Hand:
         self.cards = sorted(cards, key=ranking.card_compare())
 
     def __lt__(self, other):
-        return self.ranking.card_compare(self.cards) < self.ranking.card_compare(other.cards)
+        return self.ranking.hand_score()(self.cards) < self.ranking.hand_score()(other.cards)
     
     def __le__(self, other):
-        return self.ranking.card_compare(self.cards) <= self.ranking.card_compare(other.cards)
+        return self.ranking.hand_score()(self.cards) <= self.ranking.hand_score()(other.cards)
     
     def __gt__(self, other):
-        return self.ranking.card_compare(self.cards) > self.ranking.card_compare(other.cards)
+        return self.ranking.hand_score()(self.cards) > self.ranking.hand_score()(other.cards)
     
     def __ge__(self, other):
-        return self.ranking.card_compare(self.cards) >= self.ranking.card_compare(other.cards)
+        return self.ranking.hand_score()(self.cards) >= self.ranking.hand_score()(other.cards)
     
     def __eq__(self, other):
-        return self.ranking.card_compare(self.cards) == self.ranking.card_compare(other.cards)
+        return self.ranking.hand_score()(self.cards) == self.ranking.hand_score()(other.cards)
     
     def __ne__(self, other):
-        return self.ranking.card_compare(self.cards) != self.ranking.card_compare(other.cards)
+        return self.ranking.hand_score()(self.cards) != self.ranking.hand_score()(other.cards)
+    
+    def __str__(self):
+        return f'[{",".join(card for card in self.cards)}]'
+    
+    def __repr__(self):
+        return str(self)

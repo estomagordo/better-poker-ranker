@@ -7,7 +7,7 @@ from card import Card
 
 def score(cards: list[Card]) -> list[int]:
     rank_counts = Counter(card.rank for card in cards)
-
+    
     four_gap = cards[0].rank - cards[-1].rank == 4
     wheel = [card.rank for card in cards] == [14, 5, 4, 3, 2]
 
