@@ -7,14 +7,14 @@ from card import Card
 
 def score(cards: list[Card]) -> list[int]:
     rank_counts = Counter(card.rank for card in cards)
-    
-    four_gap = cards[0].rank - cards[-1].rank == 4
+
+    rank_span = cards[0].rank - cards[-1].rank == 4
     wheel = [card.rank for card in cards] == [14, 5, 4, 3, 2]
 
-    straight = wheel or (len(rank_counts) == 5 and four_gap)
+    straight = wheel or (len(rank_counts) == 5 and rank_span)
     flush = len(set(card.suit for card in cards)) == 1
     four_of_a_kind = rank_counts.most_common(1)[0][1] == 4
-    full_house = [count[1] for count in rank_counts.most_common(2)[:2]] == [3, 2]
+    full_house = [count[1] for count in rank_counts.most_common(2)] == [3, 2]
     three_of_a_kind = len(rank_counts) == 3 and rank_counts.most_common(1)[0][1] == 3
     two_pair = len(rank_counts) == 3 and rank_counts.most_common(1)[1][1] == 2
     one_pair = len(rank_counts) == 4
