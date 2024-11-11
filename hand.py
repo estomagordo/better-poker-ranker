@@ -16,24 +16,24 @@ class Hand:
 
     def __lt__(self, other):
         return self.hand_score() < other.hand_score()
-    
+
     def __le__(self, other):
         return self.hand_score() <= other.hand_score()
-    
+
     def __gt__(self, other):
         return self.hand_score() > other.hand_score()
-    
+
     def __ge__(self, other):
         return self.hand_score() >= other.hand_score()
-    
+
     def __eq__(self, other):
         return self.hand_score() == other.hand_score()
-    
+
     def __ne__(self, other):
         return self.hand_score() != other.hand_score()
-    
+
     def __str__(self):
         return f'[{",".join(str(card) for card in self.cards)}]'
-    
+
     def __repr__(self):
         return str(self)

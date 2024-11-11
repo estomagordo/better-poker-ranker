@@ -10,11 +10,11 @@ class Card:
     def __eq__(self, other):
         if not isinstance(other, Card):
             return False
-        
+
         return self.compact == other.compact
 
     def __str__(self):
         return self.compact
-    
+
     def __repr__(self):
         return str(self)
