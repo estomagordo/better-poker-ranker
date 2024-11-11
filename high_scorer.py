@@ -16,7 +16,7 @@ def score(cards: list[Card]) -> list[int]:
     four_of_a_kind = rank_counts.most_common(1)[0][1] == 4
     full_house = [count[1] for count in rank_counts.most_common(2)] == [3, 2]
     three_of_a_kind = len(rank_counts) == 3 and rank_counts.most_common(1)[0][1] == 3
-    two_pair = len(rank_counts) == 3 and rank_counts.most_common(1)[1][1] == 2
+    two_pair = len(rank_counts) == 3 and rank_counts.most_common(2)[1][1] == 2
     one_pair = len(rank_counts) == 4
 
     if straight and flush:
