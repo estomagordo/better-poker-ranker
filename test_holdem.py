@@ -13,7 +13,7 @@ def test_flush_over_flush():
     small_flush = Holdem(player_a, flop, turn, river)
     big_flush = Holdem(player_b, flop, turn, river)
 
-    assert(big_flush > small_flush)
+    assert big_flush > small_flush
 
 
 def test_royal_on_board():
@@ -27,7 +27,7 @@ def test_royal_on_board():
     a = Holdem(player_a, flop, turn, river)
     b = Holdem(player_b, flop, turn, river)
 
-    assert(a == b)
+    assert a == b
 
 
 def test_one_liner():
@@ -41,4 +41,22 @@ def test_one_liner():
     set = Holdem(player_a, flop, turn, river)
     straight = Holdem(player_b, flop, turn, river)
 
-    assert(straight > set)
+    assert straight > set
+
+
+def test_classify():
+    flop = [Card('7s'), Card('9s'), Card('Td')]
+    turn = Card('Jc')
+    river = Card('Ah')
+
+    a = [Card('Ad'), Card('As')]
+    b = [Card('7c'), Card('Jc')]
+    c = [Card('Td'), Card('8c')]
+
+    aces = Holdem(a, flop, turn, river)
+    suited = Holdem(b, flop, turn, river)
+    offsuit = Holdem(c, flop, turn, river)
+
+    assert aces.classify() == 'AA'
+    assert suited.classify() == 'J7s'
+    assert offsuit.classify() == 'T8o'

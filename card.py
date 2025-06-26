@@ -4,6 +4,7 @@ from card_rankings import card_rankings
 class Card:
     def __init__(self, compact: str):
         self.compact = compact
+        self.raw_rank = compact[0]
         self.rank = card_rankings[compact[0]]
         self.suit = compact[1]
 
