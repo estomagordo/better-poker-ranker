@@ -55,7 +55,7 @@ for i in range(times):
             results[player_count-minplayers][1][rank_class][2] = results[player_count-minplayers][1][rank_class][0] / results[player_count-minplayers][1][rank_class][1]
             results[player_count-minplayers][2][nuanced_class][0] += wins
             results[player_count-minplayers][2][nuanced_class][1] += 1.0
-            results[player_count-minplayers][1][nuanced_class][2] = results[player_count-minplayers][1][nuanced_class][0] / results[player_count-minplayers][1][nuanced_class][1]
+            results[player_count-minplayers][2][nuanced_class][2] = results[player_count-minplayers][2][nuanced_class][0] / results[player_count-minplayers][2][nuanced_class][1]
 
 for player_count in range(minplayers, maxplayers+1):
     _, rank_class_rankings, nuanced_class_rankings = results[player_count-minplayers]

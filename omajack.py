@@ -22,7 +22,7 @@ class Omajack:
                 playing = [self.hole_cards[i] for i in c]
 
                 for d in combinations(self.community_cards, 3):
-                    omaha = Hand(StandardRanker(), d + playing)
+                    omaha = Hand(StandardRanker(), list(d) + playing)
 
                     if omaha > best_omaha:
                         best_omaha = omaha
