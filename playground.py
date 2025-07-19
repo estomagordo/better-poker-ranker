@@ -1,45 +1,72 @@
 from deck import Deck
-from holdem import Holdem
+from omajack import Omajack
 
-times = 1000000
-tie_count = 0
-player_count = 18
-outcomes = {}
+times = 10000
+minplayers = 2
+maxplayers = 4
+showper = 20
+
+results = []
+
+for player_count in range(minplayers, maxplayers+1):
+    results.append([player_count, {}, {}])
+
 deck = Deck()
 
 for i in range(times):
-
     if i % 1000 == 0:
         print(i, times, i/times)
 
-    deck.shuffle()
+    for player_count in range(minplayers, maxplayers+1):
+        deck.shuffle()
 
-    river = deck.cards[-1]
-    turn = deck.cards[-2]
-    flop = deck.cards[-5:-2]
-    players = []
+        river = deck.cards[-1]
+        turn = deck.cards[-2]
+        flop = deck.cards[-5:-2]
+        players = []
 
-    for x in range(player_count):
-        hole_cards = deck.cards[x*2:x*2+2]
-        players.append(Holdem(hole_cards, flop, turn, river))
+        for x in range(player_count):
+            hole_cards = deck.cards[x*5:x*5+5]
+            hand = Omajack(hole_cards, flop, turn, river)
+            players.append([x, hand.best_hand()[0], hand.best_hand()[1], hand.rank_classify(), hand.nuanced_classify()])
 
-    players.sort()
+        best_omaha = max(player[1] for player in players)
+        best_black_jack = max(player[2] for player in players)
+        omaha_winners = sum(player[1] == best_omaha for player in players)
+        black_jack_winners = sum(player[2] == best_black_jack for player in players)
 
-    if players[-2] == players[-1]:
-        tie_count += 1
-        continue
+        for x, omaha, black_jack, rank_class, nuanced_class in players:
+            wins = 0.0
 
-    for he in players:
-        classified = he.classify()
+            if omaha == best_omaha:
+                wins += 0.5/omaha_winners
 
-        if classified not in outcomes:
-            outcomes[classified] = [0, 0]
+            if black_jack == best_black_jack:
+                wins += 0.5/black_jack_winners
 
-        outcomes[classified][1] += 1
+            if rank_class not in results[player_count-minplayers][1]:
+                results[player_count-minplayers][1][rank_class] = [0.0, 0.0, 0.0]
 
-    outcomes[players[-1].classify()][0] += 1
+            if nuanced_class not in results[player_count-minplayers][2]:
+                results[player_count-minplayers][2][nuanced_class] = [0.0, 0.0, 0.0]
 
-for k, v in sorted(outcomes.items(), key=lambda item: -item[1][0]/item[1][1]):
-    print(k, v, f'{round(100.0 * v[0] / v[1], 2)}%')
+            results[player_count-minplayers][1][rank_class][0] += wins
+            results[player_count-minplayers][1][rank_class][1] += 1.0
+            results[player_count-minplayers][1][rank_class][2] = results[player_count-minplayers][1][rank_class][0] / results[player_count-minplayers][1][rank_class][1]
+            results[player_count-minplayers][2][nuanced_class][0] += wins
+            results[player_count-minplayers][2][nuanced_class][1] += 1.0
+            results[player_count-minplayers][1][nuanced_class][2] = results[player_count-minplayers][1][nuanced_class][0] / results[player_count-minplayers][1][nuanced_class][1]
 
-print(tie_count)
+for player_count in range(minplayers, maxplayers+1):
+    _, rank_class_rankings, nuanced_class_rankings = results[player_count-minplayers]
+
+    print(f'Player count: {player_count}')
+    print('Best rank classified hands:')
+
+    for classified, scores in sorted(rank_class_rankings.items(), key=lambda scores: -scores[2])[:showper]:
+        print(classified, scores)
+
+    print('Best nuanced classified hands:')
+
+    for classified, scores in sorted(nuanced_class_rankings.items(), key=lambda scores: -scores[2])[:showper]:
+        print(classified, scores)
