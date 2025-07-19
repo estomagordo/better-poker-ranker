@@ -6,7 +6,7 @@ from hand import Hand
 from standard_ranker import StandardRanker
 
 
-class BlackJack:
+class Omajack:
     def __init__(self, hole_cards, flop, turn, river):
         self.hole_cards = hole_cards
         self.cards = hole_cards + flop + [turn] + [river]

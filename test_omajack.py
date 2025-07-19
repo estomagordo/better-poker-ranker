@@ -1,4 +1,4 @@
-from black_jack import BlackJack
+from omajack import Omajack
 from card import Card
 
 
@@ -9,6 +9,8 @@ def test_rank_classify():
 
     hole_cards = [Card('Ad'), Card('Jh'), Card('Th'), Card('8s'), Card('7h')]
 
-    hand = BlackJack(hole_cards, flop, turn, river)
+    hand = Omajack(hole_cards, flop, turn, river)
 
     assert hand.rank_classify() == 'AJT87'
+
+
