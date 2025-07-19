@@ -1,7 +1,7 @@
 from deck import Deck
 from omajack import Omajack
 
-times = 10000
+times = 100
 minplayers = 2
 maxplayers = 4
 showper = 20
@@ -63,10 +63,10 @@ for player_count in range(minplayers, maxplayers+1):
     print(f'Player count: {player_count}')
     print('Best rank classified hands:')
 
-    for classified, scores in sorted(rank_class_rankings.items(), key=lambda scores: -scores[2])[:showper]:
+    for classified, scores in sorted(rank_class_rankings.items(), key=lambda item: -item[1][2])[:showper]:
         print(classified, scores)
 
     print('Best nuanced classified hands:')
 
-    for classified, scores in sorted(nuanced_class_rankings.items(), key=lambda scores: -scores[2])[:showper]:
+    for classified, scores in sorted(nuanced_class_rankings.items(), key=lambda item: -item[1][2])[:showper]:
         print(classified, scores)
