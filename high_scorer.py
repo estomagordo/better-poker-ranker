@@ -6,6 +6,11 @@ from card import Card
 
 
 def score(cards: list[Card]) -> list[int]:
+    EMPTY_HAND = [0]
+
+    if not cards:
+        return EMPTY_HAND
+
     rank_counts = Counter(card.rank for card in cards)
 
     rank_span = cards[0].rank - cards[-1].rank == 4
