@@ -8,7 +8,7 @@ def score(cards: list[Card]) -> list[int]:
 
     best = 0
 
-    for selection in product(*list(map(black_jack_rankings, card.raw_rank) for card in cards)):
+    for selection in product(*list([black_jack_rankings[card.raw_rank] for card in cards])):
         s = sum(selection)
         
         if s > LIMIT:
