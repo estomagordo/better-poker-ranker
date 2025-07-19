@@ -36,7 +36,7 @@ class BlackJack:
         return self.hand
     
     def rank_classify(self):
-        return ''.join(sorted([card_rankings[card.raw_rank] for card in self.hole_cards], reverse=True))
+        return ''.join([card.raw_rank for card in sorted([card for card in self.hole_cards], key=lambda card: -card_rankings[card.raw_rank])])
     
     def nuanced_classify(self):
         reverse_ranked = sorted([card for card in self.hole_cards], key=lambda card: -card_rankings[card.raw_rank])
