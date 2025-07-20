@@ -49,3 +49,20 @@ class Omajack:
             out.append(f'{card.raw_rank}{suits_seen[card.suit]}')
 
         return ''.join(out)
+    
+    def all_black_jack_possibilities(self):
+        if not self.black_jack_possibilities:
+            poss = set()
+
+            for c in combinations(self.hole_cards, 3):
+                poss.add(Hand(BlackJackRanker(), c).hand_score())
+
+            self.black_jack_possibilities = sorted(poss)
+
+        return self.black_jack_possibilities
+    
+    def best_possible_black_jack(self):
+        return self.all_black_jack_possibilities()[-1]
+    
+    def worst_possible_black_jack(self):
+        return self.all_black_jack_possibilities()[0]
