@@ -1,7 +1,7 @@
 from deck import Deck
 from omajack import Omajack
 
-times = 100
+times = 10000000
 minplayers = 2
 maxplayers = 4
 showper = 20
@@ -14,7 +14,7 @@ for player_count in range(minplayers, maxplayers+1):
 deck = Deck()
 
 for i in range(times):
-    if i % 1000 == 0:
+    if i % 10000 == 0:
         print(i, times, i/times)
 
     for player_count in range(minplayers, maxplayers+1):
