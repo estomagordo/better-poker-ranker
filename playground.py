@@ -1,7 +1,7 @@
 from deck import Deck
 from omajack import Omajack
 
-times = 100000
+times = 10000
 minplayers = 2
 maxplayers = 4
 showper = 20
@@ -45,18 +45,21 @@ for i in range(times):
                 wins += 1.0/black_jack_winners
                 
             if black_jack_score not in results[player_count-minplayers][2]:
-                results[player_count-minplayers][2][black_jack_score] = [0.0, 0.0]
+                results[player_count-minplayers][2][black_jack_score] = [0.0, 0.0, 0.0]
             if worst_bj not in results[player_count-minplayers][3]:
-                results[player_count-minplayers][3][worst_bj] = [0.0, 0.0]
+                results[player_count-minplayers][3][worst_bj] = [0.0, 0.0, 0.0]
             if best_bj not in results[player_count-minplayers][4]:
-                results[player_count-minplayers][4][best_bj] = [0.0, 0.0]
+                results[player_count-minplayers][4][best_bj] = [0.0, 0.0, 0.0]
 
             results[player_count-minplayers][2][black_jack_score][0] += wins
             results[player_count-minplayers][2][black_jack_score][1] += 1.0
+            results[player_count-minplayers][2][black_jack_score][2] = round(results[player_count-minplayers][2][black_jack_score][0] / results[player_count-minplayers][2][black_jack_score][1], 2)
             results[player_count-minplayers][3][worst_bj][0] += wins
             results[player_count-minplayers][3][worst_bj][1] += 1.0
+            results[player_count-minplayers][3][worst_bj][2] = round(results[player_count-minplayers][3][worst_bj][0] / results[player_count-minplayers][3][worst_bj][1], 2)
             results[player_count-minplayers][4][best_bj][0] += wins
             results[player_count-minplayers][4][best_bj][1] += 1.0
+            results[player_count-minplayers][4][best_bj][2] = round(results[player_count-minplayers][4][best_bj][0] / results[player_count-minplayers][4][best_bj][1], 2)
 
 for player_count in range(minplayers, maxplayers+1):
     _, winners, playing, worst, best = results[player_count-minplayers]
@@ -65,9 +68,16 @@ for player_count in range(minplayers, maxplayers+1):
     
     print('Distribution for hand winners')
     for k in sorted(winners.keys()):
-        print(k, winners[k])
+        print(k, winners[k], winners[k]/times)
 
-    print('Best nuanced classified hands:')
+    print('Performance by playing BJ:')
+    for score in sorted(playing.keys()):
+        print(score, playing[score])
 
-    for classified, scores in sorted(nuanced_class_rankings.items(), key=lambda item: -item[1][2])[:showper]:
-        print(classified, scores)
+    print('Performance by worst BJ:')
+    for score in sorted(worst.keys()):
+        print(score, worst[score])
+
+    print('Performance by best BJ:')
+    for score in sorted(best.keys()):
+        print(score, best[score])

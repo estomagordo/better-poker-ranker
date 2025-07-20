@@ -12,6 +12,7 @@ class Omajack:
         self.cards = hole_cards + flop + [turn] + [river]
         self.community_cards = flop + [turn] + [river]
         self.hand = []
+        self.black_jack_possibilities = []
 
     def best_hand(self):
         if not self.hand:
